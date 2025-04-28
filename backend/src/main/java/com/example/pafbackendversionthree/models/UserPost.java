@@ -16,8 +16,8 @@ public class UserPost {
     @Id
     private String id;
 
-//    @DBRef
-//    private AppUser postedBy;
+    @DBRef
+    private AppUser postedBy;
 
     private Date postedAt;
 
@@ -41,13 +41,13 @@ public class UserPost {
         this.id = id;
     }
 
-//    public AppUser getPostedBy() {
-//        return postedBy;
-//    }
-//
-//    public void setPostedBy(AppUser postedBy) {
-//        this.postedBy = postedBy;
-//    }
+    public AppUser getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(AppUser postedBy) {
+        this.postedBy = postedBy;
+    }
 
     public Date getPostedAt() {
         return postedAt;
