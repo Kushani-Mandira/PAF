@@ -37,4 +37,11 @@ public class UserPostController {
         return ResponseEntity.noContent().build();
     }
 
+    // Get a single post by ID
+    @GetMapping("/{postId}")
+    public ResponseEntity<UserPostDto> getPostById(@PathVariable String postId) {
+        UserPostDto post = userPostService.getPostById(postId);
+        return ResponseEntity.ok(post);
+    }
+
 }

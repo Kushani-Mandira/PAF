@@ -85,4 +85,13 @@ public class UserPostService {
     public void deletePost(String postId) {
         userPostRepository.deleteById(postId);
     }
+
+    // Get a single post by ID
+    public UserPostDto getPostById(String postId) {
+        Optional<UserPost> optionalPost = userPostRepository.findById(postId);
+        if (optionalPost.isEmpty()) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+        return mapToDto(optionalPost.get());
+    }
 }
