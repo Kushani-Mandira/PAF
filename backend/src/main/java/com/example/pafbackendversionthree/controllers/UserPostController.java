@@ -44,4 +44,11 @@ public class UserPostController {
         return ResponseEntity.ok(post);
     }
 
+    // Get all posts
+    @GetMapping
+    public ResponseEntity<List<UserPostDto>> getAllPosts() {
+        List<UserPostDto> posts = userPostService.getAllPosts();
+        return ResponseEntity.ok(posts);
+    }
+
 }

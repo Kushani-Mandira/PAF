@@ -94,4 +94,9 @@ public class UserPostService {
         }
         return mapToDto(optionalPost.get());
     }
+
+    // Get all posts
+    public List<UserPostDto> getAllPosts() {
+        return userPostRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+    }
 }
