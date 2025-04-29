@@ -4,7 +4,6 @@ import com.example.pafbackendversionthree.dtos.CreateUpdatePostDto;
 import com.example.pafbackendversionthree.dtos.UserPostDto;
 import com.example.pafbackendversionthree.models.AppUser;
 import com.example.pafbackendversionthree.models.UserPost;
-import com.example.pafbackendversionthree.models.baseentities.Media;
 import com.example.pafbackendversionthree.repositories.UserPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +92,15 @@ public class UserPostService {
             throw new RuntimeException("Post not found with ID: " + postId);
         }
         return mapToDto(optionalPost.get());
+    }
+
+    // Get all posts
+    public List<UserPostDto> getAllPosts() {
+        return userPostRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    // Get posts by a specific user
+    public List<UserPostDto> getPostsByUser(String userId) {
+        return userPostRepository.findByPostedById(userId).stream().map(this::mapToDto).collect(Collectors.toList());
     }
 }
