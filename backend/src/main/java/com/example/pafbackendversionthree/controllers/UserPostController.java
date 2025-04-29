@@ -51,4 +51,11 @@ public class UserPostController {
         return ResponseEntity.ok(posts);
     }
 
+    // Get posts by a specific user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<UserPostDto>> getPostsByUser(@PathVariable String userId) {
+        List<UserPostDto> posts = userPostService.getPostsByUser(userId);
+        return ResponseEntity.ok(posts);
+    }
+
 }
