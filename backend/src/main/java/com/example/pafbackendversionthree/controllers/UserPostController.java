@@ -30,4 +30,11 @@ public class UserPostController {
         return ResponseEntity.ok(updatedPost);
     }
 
+    // Delete a post by ID
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable String postId) {
+        userPostService.deletePost(postId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

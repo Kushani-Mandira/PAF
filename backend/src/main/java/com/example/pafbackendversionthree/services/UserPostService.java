@@ -80,4 +80,9 @@ public class UserPostService {
         UserPost updatedPost = userPostRepository.save(post);
         return mapToDto(updatedPost);
     }
+
+    // Delete a post by ID
+    public void deletePost(String postId) {
+        userPostRepository.deleteById(postId);
+    }
 }
