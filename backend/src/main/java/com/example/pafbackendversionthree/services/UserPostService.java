@@ -30,7 +30,7 @@ public class UserPostService {
         post.setDescription(createUpdatePostDto.getDescription());
         post.setMedias(
                 createUpdatePostDto.getMedias().stream()
-                        .map(media -> new Media(media.getUrl(), media.getType()))
+                        .map(media -> new UserPost.Media(media.getUrl(), media.getType()))
                         .collect(Collectors.toList())
         );
 
@@ -59,5 +59,39 @@ public class UserPostService {
                 post.getDescription(),
                 medias
         );
+    }
+
+    // Update an existing post
+    public UserPostDto updatePost(String postId, CreateUpdatePostDto createUpdatePostDto) {
+        Optional<UserPost> optionalPost = userPostRepository.findById(postId);
+        if (optionalPost.isEmpty()) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+
+        UserPost post = optionalPost.get();
+        post.setTitle(createUpdatePostDto.getTitle());
+        post.setDescription(createUpdatePostDto.getDescription());
+        post.setMedias(
+                createUpdatePostDto.getMedias().stream()
+                        .map(media -> new UserPost.Media(media.getUrl(), media.getType()))
+                        .collect(Collectors.toList())
+        );
+
+        UserPost updatedPost = userPostRepository.save(post);
+        return mapToDto(updatedPost);
+    }
+
+    // Delete a post by ID
+    public void deletePost(String postId) {
+        userPostRepository.deleteById(postId);
+    }
+
+    // Get a single post by ID
+    public UserPostDto getPostById(String postId) {
+        Optional<UserPost> optionalPost = userPostRepository.findById(postId);
+        if (optionalPost.isEmpty()) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+        return mapToDto(optionalPost.get());
     }
 }
