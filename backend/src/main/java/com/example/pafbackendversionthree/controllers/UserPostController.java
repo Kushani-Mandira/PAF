@@ -23,4 +23,11 @@ public class UserPostController {
         return ResponseEntity.ok(createdPost);
     }
 
+    // Update an existing post
+    @PutMapping("/{postId}")
+    public ResponseEntity<UserPostDto> updatePost(@PathVariable String postId, @RequestBody CreateUpdatePostDto createUpdatePostDto) {
+        UserPostDto updatedPost = userPostService.updatePost(postId, createUpdatePostDto);
+        return ResponseEntity.ok(updatedPost);
+    }
+
 }
