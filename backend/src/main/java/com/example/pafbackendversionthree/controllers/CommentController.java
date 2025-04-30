@@ -74,10 +74,10 @@ public class CommentController {
     }
 
     @GetMapping("/count/{postId}")
-    public ResponseEntity<Map<String, Long>> getCommentCountForPost(
+    public ResponseEntity<Long> getCommentCountForPost(
             @PathVariable String postId) {
 
         long count = commentService.getCommentCountForPost(postId);
-        return ResponseEntity.ok(Map.of("count", count));
+        return ResponseEntity.ok(count);
     }
 }
