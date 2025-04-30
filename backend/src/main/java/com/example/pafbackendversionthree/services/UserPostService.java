@@ -4,7 +4,6 @@ import com.example.pafbackendversionthree.dtos.CreateUpdatePostDto;
 import com.example.pafbackendversionthree.dtos.UserPostDto;
 import com.example.pafbackendversionthree.models.AppUser;
 import com.example.pafbackendversionthree.models.UserPost;
-import com.example.pafbackendversionthree.models.baseentities.Media;
 import com.example.pafbackendversionthree.repositories.UserPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class UserPostService {
         post.setDescription(createUpdatePostDto.getDescription());
         post.setMedias(
                 createUpdatePostDto.getMedias().stream()
-                        .map(media -> new Media(media.getUrl(), media.getType()))
+                        .map(media -> new UserPost.Media(media.getUrl(), media.getType()))
                         .collect(Collectors.toList())
         );
 
@@ -59,5 +58,49 @@ public class UserPostService {
                 post.getDescription(),
                 medias
         );
+    }
+
+    // Update an existing post
+    public UserPostDto updatePost(String postId, CreateUpdatePostDto createUpdatePostDto) {
+        Optional<UserPost> optionalPost = userPostRepository.findById(postId);
+        if (optionalPost.isEmpty()) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+
+        UserPost post = optionalPost.get();
+        post.setTitle(createUpdatePostDto.getTitle());
+        post.setDescription(createUpdatePostDto.getDescription());
+        post.setMedias(
+                createUpdatePostDto.getMedias().stream()
+                        .map(media -> new UserPost.Media(media.getUrl(), media.getType()))
+                        .collect(Collectors.toList())
+        );
+
+        UserPost updatedPost = userPostRepository.save(post);
+        return mapToDto(updatedPost);
+    }
+
+    // Delete a post by ID
+    public void deletePost(String postId) {
+        userPostRepository.deleteById(postId);
+    }
+
+    // Get a single post by ID
+    public UserPostDto getPostById(String postId) {
+        Optional<UserPost> optionalPost = userPostRepository.findById(postId);
+        if (optionalPost.isEmpty()) {
+            throw new RuntimeException("Post not found with ID: " + postId);
+        }
+        return mapToDto(optionalPost.get());
+    }
+
+    // Get all posts
+    public List<UserPostDto> getAllPosts() {
+        return userPostRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    // Get posts by a specific user
+    public List<UserPostDto> getPostsByUser(String userId) {
+        return userPostRepository.findByPostedById(userId).stream().map(this::mapToDto).collect(Collectors.toList());
     }
 }
