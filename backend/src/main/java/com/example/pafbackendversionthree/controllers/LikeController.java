@@ -30,13 +30,7 @@ public class LikeController {
 
         LikeDTO.LikeResponseDTO result = likeService.toggleLike(userId, likeRequestDTO);
 
-        if (result == null) {
-            // If null is returned, post was unliked
-            return ResponseEntity.noContent().build();
-        } else {
-            // If DTO is returned, post was liked
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
-        }
+        
     }
 
 
