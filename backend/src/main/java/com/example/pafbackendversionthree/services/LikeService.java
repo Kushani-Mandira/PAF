@@ -80,4 +80,19 @@ public class LikeService {
         }
     }
 
+    public void unlikePost(String userId, String postId) {
+        // Check if user exists
+        if (!appUserRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User not found with id: " + userId);
+        }
+
+        // Check if post exists
+        if (!userPostRepository.existsById(postId)) {
+            throw new ResourceNotFoundException("Post not found with id: " + postId);
+        }
+
+        // Delete the like
+        likeRepository.deleteByUserIdAndPostId(userId, postId);
+    }
+
     }
