@@ -39,12 +39,5 @@ public class LikeController {
         }
     }
 
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> unlikePost(
-            @PathVariable String postId,
-            @RequestHeader("User-ID") String userId) {
 
-        likeService.unlikePost(userId, postId);
-        return ResponseEntity.noContent().build();
-    }
 }
