@@ -28,7 +28,7 @@ public class LikeController {
             @RequestHeader("User-ID") String userId,
             @RequestBody LikeDTO.LikeRequestDTO likeRequestDTO) {
 
-        
+        LikeDTO.LikeResponseDTO result = likeService.toggleLike(userId, likeRequestDTO);
 
         if (result == null) {
             // If null is returned, post was unliked
