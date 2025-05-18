@@ -18,7 +18,10 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    
+    @Autowired
+    public LikeController(LikeService likeService) {
+        this.likeService = likeService;
+    }
 
     @PostMapping("/toggle")
     public ResponseEntity<?> toggleLike(
